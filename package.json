@@ -1,0 +1,30 @@
+{
+  "name": "3d_game_of_life",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dest/bundle.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:eduidl/3d-game-of-life.git"
+  },
+  "author": "eduidl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eduidl/3d_game_of_life/issues"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "webpack": "^4.15.1",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "dependencies": {
+    "three": "^0.94.0",
+    "three-orbitcontrols": "^2.1.2"
+  }
+}
