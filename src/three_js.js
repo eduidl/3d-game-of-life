@@ -1,5 +1,5 @@
 const THREE = require('three');
-const OrbitControls = require('three-orbitcontrols');
+require('three-orbitcontrols');
 
 export default class ThreeJS {
   constructor() {

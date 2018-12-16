@@ -1,5 +1,5 @@
-import { LifeGame, STATE } from '../lib/life_game.js';
-import ThreeJS from '../lib/three_js.js';
+import { LifeGame, STATE } from './life_game.js';
+import ThreeJS from './three_js.js';
 
 const id = (id) => document.getElementById(id);
 
@@ -16,15 +16,6 @@ function getOption() {
     birth_max: parseInt(id('birthMax').value, 10)
   };
   return option;
-}
-
-function setOption(life_game) {
-  id('cellNum').value = life_game.cell_num;
-  id('probability').value = life_game.probability;
-  id('aliveMin').value = life_game.alive_min;
-  id('aliveMax').value = life_game.alive_max;
-  id('birthMin').value = life_game.birth_min;
-  id('birthMax').value = life_game.birth_max;
 }
 
 function coordinate(x, y, z) {
@@ -69,7 +60,7 @@ id('start').addEventListener('click', function() {
   intervalID = setInterval(function() {
     if (!life_game.updateState()) {
       clearInterval(intervalID);
-    };
+    }
     three_js.placeParticles(getCoordinateSet());
   }, 250);
 }, false);
