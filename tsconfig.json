@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "es5",
+    "lib": [
+        "dom",
+        "dom.iterable",
+        "es6"
+    ],
+    "downlevelIteration": true
+  },
+  "include": [
+    "src/**.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

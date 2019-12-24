@@ -1,7 +1,13 @@
-const THREE = require('three');
-require('three-orbitcontrols');
+import * as THREE from 'three';
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+
 
 export default class ThreeJS {
+  scene: THREE.Scene;
+  camera: THREE.PerspectiveCamera;
+  controls: OrbitControls;
+  renderer: THREE.WebGLRenderer;
+
   constructor() {
     let width = window.innerWidth;
     let height = window.innerHeight;
@@ -9,21 +15,17 @@ export default class ThreeJS {
     this.scene = new THREE.Scene();
 
     // light
-    const light = new THREE.SpotLight(0xffffff);
+    const light: THREE.SpotLight = new THREE.SpotLight(0xffffff);
     light.distance = 300;
     this.scene.add(light);
 
-    const ambient = new THREE.AmbientLight(0xffffff);
+    const ambient: THREE.AmbientLight = new THREE.AmbientLight(0xffffff);
     this.scene.add(ambient);
 
     // camera
     this.camera = new THREE.PerspectiveCamera(45, width / height, 1, 1000);
     this.camera.position.set(0, 220, 220);
-    this.camera.lookAt({ x:0, y:0, z:0 })
-
-    // controls
-    this.controls = new THREE.OrbitControls(this.camera);
-    this.controls.autoRotate = true;
+    this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     // renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: false });
@@ -31,6 +33,10 @@ export default class ThreeJS {
     this.renderer.setClearColor(0x010101);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     document.getElementById('stage').appendChild(this.renderer.domElement);
+
+    // // controls
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.autoRotate = true;
   }
 
   render() {

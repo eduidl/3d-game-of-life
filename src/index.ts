@@ -1,19 +1,20 @@
-import { LifeGame, STATE } from './life_game.js';
-import ThreeJS from './three_js.js';
+import { LifeGame, STATE } from './life_game';
+import ThreeJS from './three_js';
 
-const id = (id) => document.getElementById(id);
+const getById = (id: string): HTMLElement | null => document.getElementById(id);
+const getValue = (id: string): number => parseInt((getById(id) as HTMLInputElement).value, 10);
 
 const three_js = new ThreeJS();
 const life_game = new LifeGame(getOption());
 
 function getOption() {
   const option = {
-    cell_num: parseInt(id('cellNum').value, 10),
-    probability: parseInt(id('probability').value, 10),
-    alive_min: parseInt(id('aliveMin').value, 10),
-    alive_max: parseInt(id('aliveMax').value, 10),
-    birth_min: parseInt(id('birthMin').value, 10),
-    birth_max: parseInt(id('birthMax').value, 10)
+    cell_num: getValue('cellNum'),
+    probability: getValue('probability'),
+    alive_min: getValue('aliveMin'),
+    alive_max: getValue('aliveMax'),
+    birth_min: getValue('birthMin'),
+    birth_max: getValue('birthMax')
   };
   return option;
 }
@@ -27,7 +28,7 @@ function coordinate(x, y, z) {
   };
 }
 
-function getCoordinateSet() {
+const getCoordinateSet = () => {
   let ret = [];
   for (let x = 0; x < life_game.cell_num; x++) {
     for (let y = 0; y < life_game.cell_num; y++) {
@@ -45,17 +46,17 @@ function render() {
   three_js.render();
 }
 
-id('setting').addEventListener('mouseover', function() {
+getById('setting').addEventListener('mouseover', () => {
   three_js.controls.enabled = false;
 }, false);
 
-id('setting').addEventListener('mouseout', function() {
+getById('setting').addEventListener('mouseout', () => {
   three_js.controls.enabled = true;
 }, false);
 
 let intervalID;
 
-id('start').addEventListener('click', function() {
+getById('start').addEventListener('click', () => {
   clearInterval(intervalID);
   intervalID = setInterval(function() {
     if (!life_game.updateState()) {
@@ -65,24 +66,24 @@ id('start').addEventListener('click', function() {
   }, 250);
 }, false);
 
-id('stop').addEventListener('click', function() {
+getById('stop').addEventListener('click', () => {
   clearInterval(intervalID);
 }, false);
 
-id('oneStep').addEventListener('click', function() {
+getById('oneStep').addEventListener('click', () =>  {
   clearInterval(intervalID);
   life_game.updateState();
   three_js.placeParticles(getCoordinateSet());
 }, false);
 
-id('update').addEventListener('click', function() {
+getById('update').addEventListener('click', () => {
   clearInterval(intervalID);
   life_game.reset(getOption());
   three_js.placeParticles(getCoordinateSet());
 }, false);
 
-let timer = 0;
-window.addEventListener('resize', function() {
+let timer: any;
+window.addEventListener('resize', () => {
   if (timer > 0) clearTimeout(timer);
   timer = setTimeout(function () {
     let width = window.innerWidth;

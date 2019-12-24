@@ -15,5 +15,5 @@ npm i
 # webpack-dev-server
 npm run server
 # build for GitHub Pages
-npm run build
+npm run build:release
 ```

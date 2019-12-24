@@ -1,13 +1,21 @@
-const normalization = (num, min, max, default_) => {
+const normalization = (num: number, min: number, max: number, default_: number) => {
   return isNaN(num) ? default_ : Math.min(Math.max(num, min), max);
 };
 
-export const STATE = {
-  ALIVE: 1,
-  DEAD: 0,
+export enum STATE {
+  ALIVE = 1,
+  DEAD = 0,
 }
 
 export class LifeGame {
+  state: STATE[][][];
+  cell_num: number;
+  probability: number;
+  alive_min: number;
+  alive_max: number;
+  birth_min: number;
+  birth_max: number;
+
   constructor(option) {
     this.reset(option);
   }
@@ -43,7 +51,7 @@ export class LifeGame {
     return changed_flag;
   }
 
-  isDeadOrAlive(x, y, z) {
+  isDeadOrAlive(x: number, y: number, z: number) {
     let num = this.countSurroudingAliveCells(x, y, z);
     if (this.state[x][y][z] === STATE.ALIVE && this.alive_min <= num && num <= this.alive_max) {
       return STATE.ALIVE;
@@ -54,7 +62,7 @@ export class LifeGame {
     }
   }
 
-  countSurroudingAliveCells(x, y, z) {
+  countSurroudingAliveCells(x: number, y: number, z: number): number {
     let count = 0;
     for (let dx = -1; dx <= 1; dx++) {
       const xx = (x + dx + this.cell_num) % this.cell_num;
