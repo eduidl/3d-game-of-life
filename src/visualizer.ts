@@ -24,7 +24,7 @@ export default class Visualizer {
     this.renderer.setClearColor(0x010101);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     const stage = document.getElementById("stage");
-    if (stage == null) {
+    if (stage === null) {
       throw TypeError;
     }
     stage.appendChild(this.renderer.domElement);

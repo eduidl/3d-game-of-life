@@ -74,7 +74,7 @@ class Config {
     max: number,
     default_: number
   ): number {
-    if (num == undefined) {
+    if (num === undefined) {
       return default_;
     }
     return isNaN(num) ? default_ : Math.min(Math.max(num, min), max);

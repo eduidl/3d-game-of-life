@@ -10,7 +10,7 @@ const render = (): void => {
 };
 
 const settingElm = document.getElementById("setting");
-if (settingElm == null) {
+if (settingElm === null) {
   throw TypeError;
 }
 settingElm.addEventListener(
@@ -30,7 +30,7 @@ settingElm.addEventListener(
 
 let intervalID: number;
 const startBtn = document.getElementById("start");
-if (startBtn == null) {
+if (startBtn === null) {
   throw TypeError;
 }
 startBtn.addEventListener(
@@ -48,7 +48,7 @@ startBtn.addEventListener(
 );
 
 const stopBtn = document.getElementById("stop");
-if (stopBtn == null) {
+if (stopBtn === null) {
   throw TypeError;
 }
 stopBtn.addEventListener(
@@ -60,7 +60,7 @@ stopBtn.addEventListener(
 );
 
 const oneStepBtn = document.getElementById("oneStep");
-if (oneStepBtn == null) {
+if (oneStepBtn === null) {
   throw TypeError;
 }
 oneStepBtn.addEventListener(
@@ -74,7 +74,7 @@ oneStepBtn.addEventListener(
 );
 
 const updateBtn = document.getElementById("update");
-if (updateBtn == null) {
+if (updateBtn === null) {
   throw TypeError;
 }
 updateBtn.addEventListener(
