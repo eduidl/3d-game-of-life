@@ -1,8 +1,7 @@
-import * as THREE from 'three';
+import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-import { Point } from './types';
-
+import { Point } from "./types";
 
 export default class ThreeJS {
   scene: THREE.Scene;
@@ -11,8 +10,8 @@ export default class ThreeJS {
   renderer: THREE.WebGLRenderer;
 
   constructor() {
-    let width = window.innerWidth;
-    let height = window.innerHeight;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
 
     this.scene = new THREE.Scene();
 
@@ -34,8 +33,10 @@ export default class ThreeJS {
     this.renderer.setSize(width, height);
     this.renderer.setClearColor(0x010101);
     this.renderer.setPixelRatio(window.devicePixelRatio);
-    const stage = document.getElementById('stage');
-    if (stage == null) { throw TypeError; }
+    const stage = document.getElementById("stage");
+    if (stage == null) {
+      throw TypeError;
+    }
     stage.appendChild(this.renderer.domElement);
 
     // // controls
@@ -43,38 +44,34 @@ export default class ThreeJS {
     this.controls.autoRotate = true;
   }
 
-  render() {
+  render(): void {
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
   }
 
-  resize(width: number, height: number) {
+  resize(width: number, height: number): void {
     this.renderer.setSize(width, height);
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
   }
 
-  placeParticles(coordinateSet: Point[]) {
+  placeParticles(coordinateSet: Point[]): void {
     this.scene = new THREE.Scene();
-    let geometry = new THREE.Geometry();
+    const geometry = new THREE.Geometry();
     for (const coordinate of coordinateSet) {
       geometry.vertices.push(
-        new THREE.Vector3(
-          coordinate.x,
-          coordinate.y,
-          coordinate.z
-        )
+        new THREE.Vector3(coordinate.x, coordinate.y, coordinate.z)
       );
     }
-    let material = new THREE.PointsMaterial({
-      color: '#1faa0e',
+    const material = new THREE.PointsMaterial({
+      color: "#1faa0e",
       size: 4,
       opacity: 0.8,
       blending: THREE.AdditiveBlending,
       transparent: true,
       depthTest: true
     });
-    let particles = new THREE.Points(geometry, material);
+    const particles = new THREE.Points(geometry, material);
     this.scene.add(particles);
   }
 }
