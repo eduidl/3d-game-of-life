@@ -8,13 +8,13 @@
     "strict": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "downlevelIteration": true
+    "noUnusedParameters": true
   },
   "include": [
     "src/**.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.spec.ts"
   ]
 }
