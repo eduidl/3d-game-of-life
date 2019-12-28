@@ -3,10 +3,12 @@
     "sourceMap": true,
     "target": "es5",
     "lib": [
-        "dom",
-        "dom.iterable",
-        "es6"
+        "dom"
     ],
+    "strict": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "downlevelIteration": true
   },
   "include": [

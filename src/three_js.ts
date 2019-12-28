@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
+import { Point } from './types';
+
 
 export default class ThreeJS {
   scene: THREE.Scene;
@@ -32,7 +34,9 @@ export default class ThreeJS {
     this.renderer.setSize(width, height);
     this.renderer.setClearColor(0x010101);
     this.renderer.setPixelRatio(window.devicePixelRatio);
-    document.getElementById('stage').appendChild(this.renderer.domElement);
+    const stage = document.getElementById('stage');
+    if (stage == null) { throw TypeError; }
+    stage.appendChild(this.renderer.domElement);
 
     // // controls
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -44,16 +48,16 @@ export default class ThreeJS {
     this.renderer.render(this.scene, this.camera);
   }
 
-  resize(width, height) {
+  resize(width: number, height: number) {
     this.renderer.setSize(width, height);
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
   }
 
-  placeParticles(coordinate_set) {
+  placeParticles(coordinateSet: Point[]) {
     this.scene = new THREE.Scene();
     let geometry = new THREE.Geometry();
-    for (const coordinate of coordinate_set) {
+    for (const coordinate of coordinateSet) {
       geometry.vertices.push(
         new THREE.Vector3(
           coordinate.x,
