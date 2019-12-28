@@ -1,62 +1,36 @@
 import { LifeGame } from "./life_game";
-import ThreeJS from "./three_js";
-import { Point, State } from "./types";
+import Visualizer from "./visualizer";
 
-const getById = (id: string): HTMLElement | null => document.getElementById(id);
-
-const threeJs = new ThreeJS();
+const visualizer = new Visualizer();
 const lifeGame = new LifeGame();
-
-function coordinate(x: number, y: number, z: number): Point {
-  const particleGap = 5;
-  return {
-    x: ((lifeGame.cellNum() - 1) * 0.5 - x) * particleGap,
-    y: ((lifeGame.cellNum() - 1) * 0.5 - y) * particleGap,
-    z: ((lifeGame.cellNum() - 1) * 0.5 - z) * particleGap
-  };
-}
-
-const getCoordinateSet = (): Point[] => {
-  const ret = [];
-  for (let x = 0; x < lifeGame.cellNum(); x++) {
-    for (let y = 0; y < lifeGame.cellNum(); y++) {
-      for (let z = 0; z < lifeGame.cellNum(); z++) {
-        if (lifeGame.state[x][y][z] === State.DEAD) continue;
-        ret.push(coordinate(x, y, z));
-      }
-    }
-  }
-  return ret;
-};
 
 const render = (): void => {
   requestAnimationFrame(render);
-  threeJs.render();
+  visualizer.render();
 };
 
-let intervalID: number;
-
 const main = (): void => {
-  const settingElm = getById("setting");
+  const settingElm = document.getElementById("setting");
   if (settingElm == null) {
     throw TypeError;
   }
   settingElm.addEventListener(
     "mouseover",
     () => {
-      threeJs.controls.enabled = false;
+      visualizer.controls.enabled = false;
     },
     false
   );
   settingElm.addEventListener(
     "mouseout",
     () => {
-      threeJs.controls.enabled = true;
+      visualizer.controls.enabled = true;
     },
     false
   );
 
-  const startBtn = getById("start");
+  let intervalID: number;
+  const startBtn = document.getElementById("start");
   if (startBtn == null) {
     throw TypeError;
   }
@@ -68,13 +42,13 @@ const main = (): void => {
         if (!lifeGame.updateState()) {
           clearInterval(intervalID);
         }
-        threeJs.placeParticles(getCoordinateSet());
+        visualizer.placeParticles(lifeGame.getCoordinates());
       }, 250);
     },
     false
   );
 
-  const stopBtn = getById("stop");
+  const stopBtn = document.getElementById("stop");
   if (stopBtn == null) {
     throw TypeError;
   }
@@ -86,7 +60,7 @@ const main = (): void => {
     false
   );
 
-  const oneStepBtn = getById("oneStep");
+  const oneStepBtn = document.getElementById("oneStep");
   if (oneStepBtn == null) {
     throw TypeError;
   }
@@ -95,12 +69,12 @@ const main = (): void => {
     () => {
       clearInterval(intervalID);
       lifeGame.updateState();
-      threeJs.placeParticles(getCoordinateSet());
+      visualizer.placeParticles(lifeGame.getCoordinates());
     },
     false
   );
 
-  const updateBtn = getById("update");
+  const updateBtn = document.getElementById("update");
   if (updateBtn == null) {
     throw TypeError;
   }
@@ -109,7 +83,7 @@ const main = (): void => {
     () => {
       clearInterval(intervalID);
       lifeGame.reset();
-      threeJs.placeParticles(getCoordinateSet());
+      visualizer.placeParticles(lifeGame.getCoordinates());
     },
     false
   );
@@ -122,13 +96,13 @@ const main = (): void => {
       timer = window.setTimeout(() => {
         const width = window.innerWidth;
         const height = window.innerHeight;
-        threeJs.resize(width, height);
+        visualizer.resize(width, height);
       }, 200);
     },
     false
   );
 
-  threeJs.placeParticles(getCoordinateSet());
+  visualizer.placeParticles(lifeGame.getCoordinates());
   render();
 };
 

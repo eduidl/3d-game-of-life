@@ -5,8 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "build:debug": "webpack",
-    "build:relase": "NODE_ENV=production webpack",
-    "start": "webpack-dev-server -w",
+    "build:release": "NODE_ENV=production webpack",
+    "start": "webpack-dev-server -w --open",
     "lint": "eslint src/*.ts",
     "lint:fix": "eslint src/*.ts --fix"
   },

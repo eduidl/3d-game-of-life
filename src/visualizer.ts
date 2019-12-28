@@ -3,7 +3,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 import { Point } from "./types";
 
-export default class ThreeJS {
+export default class Visualizer {
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
   controls: OrbitControls;
@@ -12,21 +12,11 @@ export default class ThreeJS {
   constructor() {
     const width = window.innerWidth;
     const height = window.innerHeight;
-
     this.scene = new THREE.Scene();
-
-    // light
-    const light: THREE.SpotLight = new THREE.SpotLight(0xffffff);
-    light.distance = 300;
-    this.scene.add(light);
-
-    const ambient: THREE.AmbientLight = new THREE.AmbientLight(0xffffff);
-    this.scene.add(ambient);
 
     // camera
     this.camera = new THREE.PerspectiveCamera(45, width / height, 1, 1000);
     this.camera.position.set(0, 220, 220);
-    this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     // renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: false });
@@ -39,7 +29,7 @@ export default class ThreeJS {
     }
     stage.appendChild(this.renderer.domElement);
 
-    // // controls
+    // controls
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.autoRotate = true;
   }
@@ -55,10 +45,10 @@ export default class ThreeJS {
     this.camera.updateProjectionMatrix();
   }
 
-  placeParticles(coordinateSet: Point[]): void {
+  placeParticles(coordinates: Point[]): void {
     this.scene = new THREE.Scene();
     const geometry = new THREE.Geometry();
-    for (const coordinate of coordinateSet) {
+    for (const coordinate of coordinates) {
       geometry.vertices.push(
         new THREE.Vector3(coordinate.x, coordinate.y, coordinate.z)
       );
@@ -71,7 +61,6 @@ export default class ThreeJS {
       transparent: true,
       depthTest: true
     });
-    const particles = new THREE.Points(geometry, material);
-    this.scene.add(particles);
+    this.scene.add(new THREE.Points(geometry, material));
   }
 }

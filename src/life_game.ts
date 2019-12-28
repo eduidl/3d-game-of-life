@@ -1,16 +1,28 @@
-import { State } from "./types";
+import { Point, State } from "./types";
 
-const getById = (id: string): HTMLElement | null => document.getElementById(id);
-const getValue = (id: string): number | undefined =>
-  parseInt((getById(id) as HTMLInputElement).value, 10);
+const getValue = (id: string): number | undefined => {
+  const elm = document.getElementById(id);
+  if (!(elm instanceof HTMLInputElement)) {
+    throw TypeError;
+  }
+  return parseInt(elm.value, 10);
+};
+
+const setValue = (id: string, val: number): void => {
+  const elm = document.getElementById(id);
+  if (!(elm instanceof HTMLInputElement)) {
+    throw TypeError;
+  }
+  elm.value = val.toString();
+};
 
 class Config {
-  readonly cellNum: number;
-  readonly probability: number;
-  readonly aliveMin: number;
-  readonly aliveMax: number;
-  readonly birthMin: number;
-  readonly birthMax: number;
+  readonly cellNum: number; // セルの個数
+  readonly probability: number; // 生きたセルの割合
+  readonly aliveMin: number; // 生存できる隣人最小値
+  readonly aliveMax: number; //  生存できる隣人最大値
+  readonly birthMin: number; // 誕生できる隣人最小値
+  readonly birthMax: number; // 誕生できる隣人最大値
 
   constructor(
     cellNum?: number,
@@ -20,26 +32,26 @@ class Config {
     birthMin?: number,
     birthMax?: number
   ) {
-    this.cellNum = Config.normalize(cellNum, 5, 30, 20); // セルの個数
-    this.probability = Config.normalize(probability, 0, 100, 25); // 生きたセルの割合
-    this.aliveMin = Config.normalize(aliveMin, 0, 26, 4); // 生存できる隣人最小値
+    this.cellNum = Config.normalize(cellNum, 5, 30, 20);
+    this.probability = Config.normalize(probability, 0, 100, 25);
+    this.aliveMin = Config.normalize(aliveMin, 0, 26, 4);
     this.aliveMax = Config.normalize(
       aliveMax,
       this.aliveMin,
       26,
       this.aliveMin
-    ); // 生存できる隣人最大値
-    this.birthMin = Config.normalize(birthMin, 0, 26, 6); // 誕生できる隣人最小値
+    );
+    this.birthMin = Config.normalize(birthMin, 0, 26, 6);
     this.birthMax = Config.normalize(
       birthMax,
       this.birthMin,
       26,
       this.birthMin
-    ); // 誕生できる隣人最大値
+    );
   }
 
   static readCurrentConfig(): Config {
-    return new Config(
+    const config = new Config(
       getValue("cellNum"),
       getValue("probability"),
       getValue("aliveMin"),
@@ -47,6 +59,13 @@ class Config {
       getValue("birthMin"),
       getValue("birthMax")
     );
+    setValue("cellNum", config.cellNum);
+    setValue("probability", config.probability);
+    setValue("aliveMin", config.aliveMin);
+    setValue("aliveMax", config.aliveMax);
+    setValue("birthMin", config.birthMin);
+    setValue("birthMax", config.birthMax);
+    return config;
   }
 
   static normalize(
@@ -63,7 +82,7 @@ class Config {
 }
 
 export class LifeGame {
-  state: State[][][];
+  private state: State[][][];
   private config: Config;
 
   constructor() {
@@ -111,7 +130,29 @@ export class LifeGame {
     return changedFlag;
   }
 
-  isDeadOrAlive(x: number, y: number, z: number): State {
+  private coordinate(x: number, y: number, z: number): Point {
+    const particleGap = 5;
+    return {
+      x: ((this.config.cellNum - 1) * 0.5 - x) * particleGap,
+      y: ((this.config.cellNum - 1) * 0.5 - y) * particleGap,
+      z: ((this.config.cellNum - 1) * 0.5 - z) * particleGap
+    };
+  }
+
+  getCoordinates(): Point[] {
+    const coordinates = [];
+    for (let x = 0; x < this.config.cellNum; x++) {
+      for (let y = 0; y < this.config.cellNum; y++) {
+        for (let z = 0; z < this.config.cellNum; z++) {
+          if (this.state[x][y][z] === State.DEAD) continue;
+          coordinates.push(this.coordinate(x, y, z));
+        }
+      }
+    }
+    return coordinates;
+  }
+
+  private isDeadOrAlive(x: number, y: number, z: number): State {
     const num = this.countSurroudingAliveCells(x, y, z);
     if (
       this.state[x][y][z] === State.ALIVE &&
@@ -125,18 +166,17 @@ export class LifeGame {
       num <= this.config.birthMax
     ) {
       return State.ALIVE;
-    } else {
-      return State.DEAD;
     }
+    return State.DEAD;
   }
 
-  countSurroudingAliveCells(x: number, y: number, z: number): number {
+  private countSurroudingAliveCells(x: number, y: number, z: number): number {
     let count = 0;
-    for (let dx = -1; dx <= 1; dx++) {
+    for (let dx = -1; dx <= 1; ++dx) {
       const xx = (x + dx + this.config.cellNum) % this.config.cellNum;
-      for (let dy = -1; dy <= 1; dy++) {
+      for (let dy = -1; dy <= 1; ++dy) {
         const yy = (y + dy + this.config.cellNum) % this.config.cellNum;
-        for (let dz = -1; dz <= 1; dz++) {
+        for (let dz = -1; dz <= 1; ++dz) {
           if (dx === 0 && dy === 0 && dz === 0) continue;
           const zz = (z + dz + this.config.cellNum) % this.config.cellNum;
           count += this.state[xx][yy][zz];
@@ -144,9 +184,5 @@ export class LifeGame {
       }
     }
     return count;
-  }
-
-  cellNum(): number {
-    return this.config.cellNum;
   }
 }

@@ -13,7 +13,7 @@ Qiita：https://qiita.com/eduidl/items/5cd3497e2099e98c74c9 (in Japanese)
 ```sh
 npm i
 # webpack-dev-server
-npm run server
+npm run start
 # build for GitHub Pages
 npm run build:release
 ```
