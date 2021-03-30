@@ -47,10 +47,15 @@ export default class Visualizer {
 
   placeParticles(coordinates: Point[]): void {
     this.scene = new THREE.Scene();
-    const geometry = new THREE.Geometry();
-    for (const coordinate of coordinates) {
-      geometry.vertices.push(
-        new THREE.Vector3(coordinate.x, coordinate.y, coordinate.z)
+    const geometry = new THREE.BufferGeometry();
+    const vertices = new Float32Array(coordinates.length * 3);
+    geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
+    for (let i = 0; i < coordinates.length; ++i) {
+      geometry.attributes.position.setXYZ(
+        i,
+        coordinates[i].x,
+        coordinates[i].y,
+        coordinates[i].z
       );
     }
     const material = new THREE.PointsMaterial({
