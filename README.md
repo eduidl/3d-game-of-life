@@ -1,7 +1,7 @@
 # 3D Game of Life
 
 [![Deploy GitHub Pages](https://github.com/eduidl/3d-game-of-life/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/eduidl/3d-game-of-life/actions/workflows/gh-pages.yml)
-![License](https://img.shields.io/github/license/eduidl/3d-game-of-life)
+[![License](https://img.shields.io/github/license/eduidl/3d-game-of-life)](https://github.com/eduidl/3d-game-of-life/blob/main/LICENSE)
 
 Third dimensional Conway's Game of Life
 
