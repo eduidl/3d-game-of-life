@@ -1,5 +1,7 @@
 # 3D Game of Life
 
+[![Deploy GitHub Pages](https://github.com/eduidl/3d-game-of-life/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/eduidl/3d-game-of-life/actions/workflows/gh-pages.yml)
+
 Third dimensional Conway's Game of Life
 
 See https://eduidl.github.io/3d-game-of-life/
