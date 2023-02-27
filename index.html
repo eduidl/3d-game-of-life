@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-  <style>
-    body {
+<!doctype html><html><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1"><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous"><style>body {
       overflow: hidden;
       margin: 0;
       height: 100%;
@@ -29,52 +21,4 @@
       position: absolute;
       top: 0;
       right: 0;
-    }
-  </style>
-  <title>三次元ライフゲーム</title>
-</head>
-<body>
-  <div class="container-fluid">
-    <div id="stage"></div>
-    <div class="buttons">
-      <div class="card">
-        <div class="btn-group" role="group">
-          <button type="button" id="start" class="btn btn-light">開始</button>
-          <button type="button" id="stop" class="btn btn-light">停止</button>
-          <button type="button" id="update" class="btn btn-light">更新</button>
-          <button type="button" id="oneStep" class="btn btn-light">1世代後</button>
-        </div>
-      </div>
-    </div>
-    <div id ="setting" class="setting">
-      <div class="card">
-        <button class="form-control" type="button" data-toggle="collapse" data-target="#collapsed-menu">設定</button>
-        <div id="collapsed-menu" class="collapse">
-          <ul class="list-group">
-            <li class="list-group-item">
-              <p>一辺のセルの個数(5-30): <input type="number" min=1 max=30 id="cellNum" class="form-group" value="20"/>個</p>
-            </li>
-            <li class="list-group-item">
-              <p>初期状態の生きたセルの割合(0-100): <input type="number" min=1 max=100 id="probability" value="25"/>%</p>
-            </li>
-            <li class="list-group-item">
-              <p>生存可能な周辺の生きたセルの個数(0-26)</p>
-              <p>min: <input type="number" min=0 max=26 id="aliveMin" value="4"/>
-                 max: <input type="number" min=0 max=26 id="aliveMax" value="7"/></p>
-            </li>
-            <li class="list-group-item">
-              <p>誕生可能な周辺の生きたセルの個数(0-26)</p>
-              <p>min: <input type="number" min=0 max=26 id="birthMin" value="6"/>
-                 max: <input type="number" min=0 max=26 id="birthMax" value="6"/></p>
-            </li>
-            <li class="list-group-item">※設定は更新ボタンを押したときに反映されます</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-<script type="text/javascript" src="bundle.js"></script></body>
-</html>
+    }</style><title>三次元ライフゲーム</title><script defer="defer" src="bundle.js"></script></head><body><div class="container-fluid"><div id="stage"></div><div class="buttons"><div class="card"><div class="btn-group" role="group"><button type="button" id="start" class="btn btn-light">開始</button> <button type="button" id="stop" class="btn btn-light">停止</button> <button type="button" id="update" class="btn btn-light">更新</button> <button type="button" id="oneStep" class="btn btn-light">1世代後</button></div></div></div><div id="setting" class="setting"><div class="card"><button class="form-control" type="button" data-toggle="collapse" data-target="#collapsed-menu">設定</button><div id="collapsed-menu" class="collapse"><ul class="list-group"><li class="list-group-item"><p>一辺のセルの個数(5-30): <input type="number" min="1" max="30" id="cellNum" class="form-group" value="20"/>個</p></li><li class="list-group-item"><p>初期状態の生きたセルの割合(0-100): <input type="number" min="1" max="100" id="probability" value="25"/>%</p></li><li class="list-group-item"><p>生存可能な周辺の生きたセルの個数(0-26)</p><p>min: <input type="number" min="0" max="26" id="aliveMin" value="4"/> max: <input type="number" min="0" max="26" id="aliveMax" value="7"/></p></li><li class="list-group-item"><p>誕生可能な周辺の生きたセルの個数(0-26)</p><p>min: <input type="number" min="0" max="26" id="birthMin" value="6"/> max: <input type="number" min="0" max="26" id="birthMax" value="6"/></p></li><li class="list-group-item">※設定は更新ボタンを押したときに反映されます</li></ul></div></div></div></div><script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script><script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script></body></html>
