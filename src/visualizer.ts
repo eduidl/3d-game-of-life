@@ -49,15 +49,12 @@ export default class Visualizer {
     this.scene = new THREE.Scene();
     const geometry = new THREE.BufferGeometry();
     const vertices = new Float32Array(coordinates.length * 3);
-    geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
     for (let i = 0; i < coordinates.length; ++i) {
-      geometry.attributes.position.setXYZ(
-        i,
-        coordinates[i].x,
-        coordinates[i].y,
-        coordinates[i].z
-      );
+      vertices[3 * i + 0] = coordinates[i].x;
+      vertices[3 * i + 1] = coordinates[i].y;
+      vertices[3 * i + 2] = coordinates[i].z;
     }
+    geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
     const material = new THREE.PointsMaterial({
       color: "#1faa0e",
       size: 4,
